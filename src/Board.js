@@ -180,7 +180,7 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow, rowStart) {
       
-      debugger;
+      // debugger;
       var table = this.rows();
       var result = 0;
       var diagonalIndex = minorDiagonalColumnIndexAtFirstRow + 1;
@@ -209,7 +209,7 @@
         }
       }
       for (var j = 1; j < table.length - 1; j++) {
-        if (this.hasMinorDiagonalConflictAt(4, j)) {
+        if (this.hasMinorDiagonalConflictAt(table.length - 1, j)) {
           return true;
         }
       }
