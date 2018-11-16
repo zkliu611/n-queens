@@ -32,40 +32,84 @@ window.findNRooksSolution = function(n) {
   return solution.rows();
 };
 
+
+
+/*
+PseudoCode:
+  /declare variable called jM=0 and iM=0, rookCount =0
+
+  /declare recursive Inner function 
+    if rookCount = n, then we do 
+      /generate a new board with coordinates (i--> row index, j --> col index)
+      /toggle the (0,0) position and set equal to 1. 
+    /Else
+    /start itteration from (iM, jM)
+      /toggle (0,1) and check for conflict
+        /if there is conflict, then untoggle that piece and move to next cell.
+        /if there is no conflict, then keep piece at 1 and set iM, jM to the position where there is no conflict
+      /then recurse by calling function back
+*/  
+
+
+
+
 //return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-
+  var solutionCount = 0;
+  var board = new Board({n: n});
+  
+  var findSolution = function(row) {
+    if(row === n) {
+      solutionCount++;
+      return;
+    }
+    for (var i = 0; i < n; i++) {
+      board.togglePiece(row, i);
+      if( !board.hasAnyRooksConflicts() ) {
+        findSolution(row + 1);
+      }
+      board.togglePiece(row, i);
+    }
+  }
+  
+  findSolution(0)
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
 
-// window.countNRooksSolutions = function(n) {
-//   factorial solution
-//   var factorial = function(n) {
-//     if (n < 0) {
-//       return null;
-//     }
-//     if (n === 0) {
-//       return 1;
-//     }
-//     if (n === 1) {
-//       return 1;
-//     }
-//     return n * factorial(n - 1);
-//   };
-  
-//   var solutionCount = factorial(n); 
 
-//   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-//   return solutionCount;
-// };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
-window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+/*
+/create a queenCount
+/start toggle 0,0, iterate through table to place all possible queens, incease queenCount each time we add a queen.
+  /at end of iteration, check if queenCount === 4.
+  /if queen count is === 4, return solution
+  /if queen count is less than 4, re-set board, in
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+*/
+
+window.findNQueensSolution = function(n) { 
+  var board = new Board({n: n});
+  
+  var innerFunc = function(r) {
+    //our base case is when we know we have solution.
+    
+    for (var i = 0; i < n; i++) {
+      board.togglePiece(i, r);
+      if (!board.hasAnyQueensConflicts(i, r)) {
+        innerFunc(r + 1);
+      }
+      board.togglePiece(i, r);
+    }
+    
+    
+  }
+  
+  //what happend if we cant put a queen on a row
+
+ 
+console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution.rows());
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
